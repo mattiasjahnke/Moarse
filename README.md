@@ -3,7 +3,9 @@ My solution to a Swift challenge https://medium.com/@adamontherun/swift-roll-1-b
 
 ## The solution
 ### Morse
-`Morse` is a type that can be initialised by either a clean text `String` ("hello world") or a morse `String` ("... --- ... / ... --- ...")
+`Morse` is a type that can be initialised by either
+* Clean text `String` ("hello world")
+* A morse `String` ("... --- ... / ... --- ...")
 
 ### MorseGestureRecognizer
 A UIGestureRecognizer subclass that takes taps or presses as morse input and produces clear text
