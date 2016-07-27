@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="MorseCode" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="249" horizontalCompressionResistancePriority="749" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Morse code or plain text" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="3ZQ-GC-zKg">
+                                <rect key="frame" x="20" y="94" width="441" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Morz" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bxy-5Q-q2w">
+                                <rect key="frame" x="257" y="28" width="87" height="50.5"/>
+                                <fontDescription key="fontDescription" type="system" weight="ultraLight" pointSize="42"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sBp-bU-mwh">
+                                <rect key="frame" x="469" y="94" width="111" height="30"/>
+                                <fontDescription key="fontDescription" type="system" weight="ultraLight" pointSize="15"/>
+                                <state key="normal" title="Generate output"/>
+                                <connections>
+                                    <action selector="generateOutput:" destination="BYZ-38-t0r" eventType="touchUpInside" id="QkS-Vl-TZT"/>
+                                </connections>
+                            </button>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="kOb-oz-hIi">
+                                <rect key="frame" x="20" y="132" width="560" height="29"/>
+                                <segments>
+                                    <segment title="Text is fine"/>
+                                    <segment title="Let me hear it"/>
+                                    <segment title="Let there be lights"/>
+                                </segments>
+                            </segmentedControl>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Output" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PCV-Iv-Jjk">
+                                <rect key="frame" x="20" y="176" width="47.5" height="18"/>
+                                <fontDescription key="fontDescription" type="system" weight="ultraLight" pointSize="15"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3rH-pO-ELy">
+                                <rect key="frame" x="20" y="240" width="560" height="340"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gyP-pR-TJy">
+                                <rect key="frame" x="20" y="202" width="560" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="gyP-pR-TJy" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="3uL-mU-UMC"/>
+                            <constraint firstItem="3ZQ-GC-zKg" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="8DS-Dp-yAh"/>
+                            <constraint firstItem="kOb-oz-hIi" firstAttribute="top" secondItem="3ZQ-GC-zKg" secondAttribute="bottom" constant="8" id="DGY-Y0-JHr"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="kOb-oz-hIi" secondAttribute="leading" id="Ien-2h-tMW"/>
+                            <constraint firstItem="sBp-bU-mwh" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="Mev-4z-aEz"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="3rH-pO-ELy" secondAttribute="bottom" constant="20" id="TcR-d4-C11"/>
+                            <constraint firstItem="3ZQ-GC-zKg" firstAttribute="top" secondItem="Bxy-5Q-q2w" secondAttribute="bottom" constant="16" id="VSp-GO-Aa3"/>
+                            <constraint firstItem="3rH-pO-ELy" firstAttribute="top" secondItem="gyP-pR-TJy" secondAttribute="bottom" constant="8" id="XDM-XA-Yf5"/>
+                            <constraint firstItem="sBp-bU-mwh" firstAttribute="centerY" secondItem="3ZQ-GC-zKg" secondAttribute="centerY" id="bpF-0R-8mG"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="3rH-pO-ELy" secondAttribute="leading" id="hjv-wR-hyZ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="3rH-pO-ELy" secondAttribute="trailing" id="oCe-yw-Tr5"/>
+                            <constraint firstItem="Bxy-5Q-q2w" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="oV1-an-yjo"/>
+                            <constraint firstItem="kOb-oz-hIi" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="qfX-QJ-x2O"/>
+                            <constraint firstItem="Bxy-5Q-q2w" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" id="qpE-R5-n1F"/>
+                            <constraint firstItem="gyP-pR-TJy" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="qwv-zS-pbk"/>
+                            <constraint firstItem="sBp-bU-mwh" firstAttribute="leading" secondItem="3ZQ-GC-zKg" secondAttribute="trailing" constant="8" id="tFG-z4-Dyq"/>
+                            <constraint firstItem="gyP-pR-TJy" firstAttribute="top" secondItem="PCV-Iv-Jjk" secondAttribute="bottom" constant="8" id="w3c-Md-1Tr"/>
+                            <constraint firstItem="PCV-Iv-Jjk" firstAttribute="top" secondItem="kOb-oz-hIi" secondAttribute="bottom" constant="16" id="xwI-8H-Id8"/>
+                            <constraint firstItem="PCV-Iv-Jjk" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="ysZ-Tb-XrQ"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="blinkView" destination="3rH-pO-ELy" id="WB6-sN-iEl"/>
+                        <outlet property="inputTextField" destination="3ZQ-GC-zKg" id="1fN-nE-MEd"/>
+                        <outlet property="outputTextField" destination="gyP-pR-TJy" id="ZVJ-Ej-9rE"/>
+                        <outlet property="segmentedControl" destination="kOb-oz-hIi" id="BuF-RV-zSs"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="291" y="429"/>
+        </scene>
+    </scenes>
+</document>
