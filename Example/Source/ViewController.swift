@@ -1,6 +1,6 @@
 //
 //  ViewController.swift
-//  MorseCode
+//  iOS Example
 //
 //  Created by Mattias Jähnke on 25/07/16.
 //  Copyright © 2016 Mattias Jähnke. All rights reserved.
@@ -8,16 +8,17 @@
 
 import UIKit
 import AVFoundation
+import Moarse
 
 class ViewController: UIViewController {
-
+    
     @IBOutlet weak var inputTextField: UITextField!
     @IBOutlet weak var outputTextField: UITextField!
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     @IBOutlet weak var blinkView: UIView!
     
-    fileprivate var signal: MorseSignal?
-    fileprivate var beepPlayer: AVAudioPlayer!
+    private var signal: MorseSignal?
+    private var beepPlayer: AVAudioPlayer!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,7 +66,7 @@ class ViewController: UIViewController {
         }
     }
     
-    func handleMorseGesture(_ gesture: MorseGestureRecognizer) {
+    @objc private func handleMorseGesture(_ gesture: MorseGestureRecognizer) {
         switch gesture.state {
         case .ended:
             outputTextField.text = "\(outputTextField.text!)\(gesture.lastResolvedCharacter!)"

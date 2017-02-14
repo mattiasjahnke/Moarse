@@ -1,6 +1,5 @@
 //
 //  MorseSignal.swift
-//  MorseCode
 //
 //  Created by Mattias Jähnke on 26/07/16.
 //  Copyright © 2016 Mattias Jähnke. All rights reserved.
@@ -9,22 +8,22 @@
 import Foundation
 
 /// `MorseSignal` can emit a more signal (high/low) with a given frequency (ms per dot)
-open class MorseSignal {
+public class MorseSignal {
     public enum Signal {
         case high
         case low
         case finished
     }
     
-    fileprivate let dotDuration: TimeInterval
-    fileprivate let morse: Morse
-    fileprivate let change: (Signal) -> ()
-    fileprivate let repeating: Bool
+    private let dotDuration: TimeInterval
+    private let morse: Morse
+    private let change: (Signal) -> ()
+    private let repeating: Bool
     
-    fileprivate var morseString = ""
-    fileprivate var timer: Timer?
+    private var morseString = ""
+    private var timer: Timer?
     
-    fileprivate var currentState = Signal.low {
+    private var currentState = Signal.low {
         didSet {
             if oldValue != currentState {
                 change(currentState)
@@ -39,7 +38,7 @@ open class MorseSignal {
         self.repeating = repeating
     }
     
-    open func start() {
+    public func start() {
         if timer != nil { stop() }
         
         morseString = tickerizeMorseString(morse.morseString)
@@ -51,12 +50,12 @@ open class MorseSignal {
                                                        repeats: true)
     }
     
-    open func stop() {
+    public func stop() {
         timer?.invalidate()
         timer = nil
     }
     
-    fileprivate func tickerizeMorseString(_ string: String) -> String {
+    private func tickerizeMorseString(_ string: String) -> String {
         return string.components(separatedBy: " / ").map { word in
             return word.components(separatedBy: " ").map { char in
                 var s = char.characters.reduce("", {"\($0)\($1)?" })
@@ -67,7 +66,7 @@ open class MorseSignal {
     }
     
     @objc
-    fileprivate func tick() {
+    private func tick() {
         guard !morseString.isEmpty else {
             stop()
             if repeating {

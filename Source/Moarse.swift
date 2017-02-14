@@ -1,6 +1,5 @@
 //
-//  Morse.swift
-//  MorseCode
+//  Moarse.swift
 //
 //  Created by Mattias Jähnke on 25/07/16.
 //  Copyright © 2016 Mattias Jähnke. All rights reserved.
@@ -57,7 +56,7 @@ public struct Morse {
         fileprivate struct Char {
             fileprivate let pattern: [Bool] // true = high, false = low
         }
-        fileprivate let characters: [Char]
+        fileprivate let characters: [Char?]
     }
     fileprivate let words: [Word]
 }
@@ -78,13 +77,13 @@ public extension Morse {
 private extension Morse.Word {
     /// Create a `Word` from clear text
     init(clearText string: String) {
-        characters = string.characters.map { Char(clearTextCharacter: $0)! } // TODO: Handle unwrap
+        characters = string.characters.map { Char(clearTextCharacter: $0) }
     }
     
     /// Create a `Word` from a morse string
     init(morseString string: String) {
         characters = string.components(separatedBy: " ").map { c in
-            return Char(morsePattern: c.characters.map { $0 == Character("-") })! // TODO: Handle unwrap
+            return Char(morsePattern: c.characters.map { $0 == Character("-") })
         }
     }
 }
@@ -111,7 +110,10 @@ public extension Morse {
     var clearText: String {
         return words.map { word -> String in
             return word.characters.map { char in
-                guard let c = charAlpha.filter({ $0.1 == char.pattern }).first?.0 else { return "?" }
+                guard let c = charAlpha.filter({
+                    guard let char = char else { return false }
+                    return $0.1 == char.pattern
+                }).first?.0 else { return "?" }
                 return String(c)
                 }.joined(separator: "")
             }.joined(separator: " ")
@@ -121,7 +123,8 @@ public extension Morse {
     var morseString: String {
         return words.map { word -> String in
             word.characters.map { char in
-                char.pattern.map { $0 ? "-" : "." }.joined(separator: "")
+                guard let char = char else { return "?" }
+                return char.pattern.map { $0 ? "-" : "." }.joined(separator: "")
             }.joined(separator: " ")
         }.joined(separator: " / ")
     }

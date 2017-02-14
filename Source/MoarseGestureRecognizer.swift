@@ -1,6 +1,5 @@
 //
-//  MorseGestureRecognizer.swift
-//  MorseCode
+//  MoarseGestureRecognizer.swift
 //
 //  Created by Mattias Jähnke on 26/07/16.
 //  Copyright © 2016 Mattias Jähnke. All rights reserved.
@@ -9,15 +8,15 @@
 import UIKit
 import UIKit.UIGestureRecognizerSubclass
 
-open class MorseGestureRecognizer: UIGestureRecognizer {
-    open var dotDuration: TimeInterval = 50
-    open var lastResolvedCharacter: String?
+public class MorseGestureRecognizer: UIGestureRecognizer {
+    public var dotDuration: TimeInterval = 50
+    public var lastResolvedCharacter: String?
     
-    fileprivate var lastPress: Date?
-    fileprivate var currentTapBegan: Date!
-    fileprivate var currentMorseString = ""
+    private var lastPress: Date?
+    private var currentTapBegan: Date!
+    private var currentMorseString = ""
     
-    open override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent) {
+    override public func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent) {
         super.touchesBegan(touches, with: event)
         
         if currentMorseString.isEmpty {
@@ -31,8 +30,7 @@ open class MorseGestureRecognizer: UIGestureRecognizer {
                                                          object: nil)
     }
     
-    
-    open override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent) {
+    override public func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent) {
         super.touchesEnded(touches, with: event)
         
         let length = Date().timeIntervalSince(currentTapBegan)
@@ -49,8 +47,7 @@ open class MorseGestureRecognizer: UIGestureRecognizer {
                              afterDelay: dotDuration / 1000 * 7)
     }
     
-    @objc
-    fileprivate func resolveCharacter() {
+    @objc private func resolveCharacter() {
         // Add fail when Morse init is optional
         lastResolvedCharacter = Morse(morseString: currentMorseString).clearText
         state = .ended
