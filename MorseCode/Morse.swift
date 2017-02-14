@@ -45,7 +45,7 @@ private let alphabet = ["a" : [0, 1],
                         "9" : [1, 1, 1, 1, 0],
                         "0" : [1, 1, 1, 1, 1]]
 
-private let charAlpha = alphabet.reduce([:], combine: { (r, x) -> [Character : [Bool]] in
+private let charAlpha = alphabet.reduce([:], { (r, x) -> [Character : [Bool]] in
     var e = r
     e[Character(x.0)] = x.1.map { $0 == 0 ? false : true }
     return e
@@ -53,25 +53,25 @@ private let charAlpha = alphabet.reduce([:], combine: { (r, x) -> [Character : [
 
 /// Represents a Morse code sentence
 public struct Morse {
-    private struct Word {
-        private struct Char {
-            private let pattern: [Bool] // true = high, false = low
+    fileprivate struct Word {
+        fileprivate struct Char {
+            fileprivate let pattern: [Bool] // true = high, false = low
         }
-        private let characters: [Char]
+        fileprivate let characters: [Char]
     }
-    private let words: [Word]
+    fileprivate let words: [Word]
 }
 
 // MARK: Input
 public extension Morse {
     /// Initialize a `Morse` with a clear text string, like "SOS SOS"
     init(clearText string: String) {
-        words = string.lowercaseString.componentsSeparatedByString(" ").map { Word(clearText: $0) }
+        words = string.lowercased().components(separatedBy: " ").map { Word(clearText: $0) }
     }
     
     /// Initialize a `Morse` with a string like "... --- ... / ..-"
     init(morseString string: String) {
-        words = string.componentsSeparatedByString(" / ").map { Word(morseString: $0) }
+        words = string.components(separatedBy: " / ").map { Word(morseString: $0) }
     }
 }
 
@@ -83,7 +83,7 @@ private extension Morse.Word {
     
     /// Create a `Word` from a morse string
     init(morseString string: String) {
-        characters = string.componentsSeparatedByString(" ").map { c in
+        characters = string.components(separatedBy: " ").map { c in
             return Char(morsePattern: c.characters.map { $0 == Character("-") })! // TODO: Handle unwrap
         }
     }
@@ -113,16 +113,16 @@ public extension Morse {
             return word.characters.map { char in
                 guard let c = charAlpha.filter({ $0.1 == char.pattern }).first?.0 else { return "?" }
                 return String(c)
-                }.joinWithSeparator("")
-            }.joinWithSeparator(" ")
+                }.joined(separator: "")
+            }.joined(separator: " ")
     }
     
     /// Return a morse string representation of a `Morse` type
     var morseString: String {
         return words.map { word -> String in
             word.characters.map { char in
-                char.pattern.map { $0 ? "-" : "." }.joinWithSeparator("")
-            }.joinWithSeparator(" ")
-        }.joinWithSeparator(" / ")
+                char.pattern.map { $0 ? "-" : "." }.joined(separator: "")
+            }.joined(separator: " ")
+        }.joined(separator: " / ")
     }
 }

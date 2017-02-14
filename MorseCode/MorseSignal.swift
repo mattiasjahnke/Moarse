@@ -9,22 +9,22 @@
 import Foundation
 
 /// `MorseSignal` can emit a more signal (high/low) with a given frequency (ms per dot)
-public class MorseSignal {
+open class MorseSignal {
     public enum Signal {
         case high
         case low
         case finished
     }
     
-    private let dotDuration: NSTimeInterval
-    private let morse: Morse
-    private let change: Signal -> ()
-    private let repeating: Bool
+    fileprivate let dotDuration: TimeInterval
+    fileprivate let morse: Morse
+    fileprivate let change: (Signal) -> ()
+    fileprivate let repeating: Bool
     
-    private var morseString = ""
-    private var timer: NSTimer?
+    fileprivate var morseString = ""
+    fileprivate var timer: Timer?
     
-    private var currentState = Signal.low {
+    fileprivate var currentState = Signal.low {
         didSet {
             if oldValue != currentState {
                 change(currentState)
@@ -32,42 +32,42 @@ public class MorseSignal {
         }
     }
     
-    public init(morse: Morse, dotDuration: NSTimeInterval = 50, repeating: Bool = false, change: Signal -> ()) {
+    public init(morse: Morse, dotDuration: TimeInterval = 50, repeating: Bool = false, change: @escaping (Signal) -> ()) {
         self.morse = morse
         self.dotDuration = dotDuration
         self.change = change
         self.repeating = repeating
     }
     
-    public func start() {
+    open func start() {
         if timer != nil { stop() }
         
         morseString = tickerizeMorseString(morse.morseString)
         
-        timer = NSTimer.scheduledTimerWithTimeInterval(dotDuration / 1000,
+        timer = Timer.scheduledTimer(timeInterval: dotDuration / 1000,
                                                        target: self,
                                                        selector: #selector(MorseSignal.tick),
                                                        userInfo: nil,
                                                        repeats: true)
     }
     
-    public func stop() {
+    open func stop() {
         timer?.invalidate()
         timer = nil
     }
     
-    private func tickerizeMorseString(string: String) -> String {
-        return string.componentsSeparatedByString(" / ").map { word in
-            return word.componentsSeparatedByString(" ").map { char in
-                var s = char.characters.reduce("", combine: {"\($0)\($1)?" })
-                s.removeAtIndex(s.endIndex.predecessor())
+    fileprivate func tickerizeMorseString(_ string: String) -> String {
+        return string.components(separatedBy: " / ").map { word in
+            return word.components(separatedBy: " ").map { char in
+                var s = char.characters.reduce("", {"\($0)\($1)?" })
+                s.remove(at: s.characters.index(before: s.endIndex))
                 return s
-            }.joinWithSeparator("%%%")
-        }.joinWithSeparator("%%%%%%%").stringByReplacingOccurrencesOfString("-", withString: "---")
+            }.joined(separator: "%%%")
+        }.joined(separator: "%%%%%%%").replacingOccurrences(of: "-", with: "---")
     }
     
     @objc
-    private func tick() {
+    fileprivate func tick() {
         guard !morseString.isEmpty else {
             stop()
             if repeating {
@@ -77,7 +77,7 @@ public class MorseSignal {
             }
             return
         }
-        let char = morseString.removeAtIndex(morseString.startIndex)
+        let char = morseString.remove(at: morseString.startIndex)
         switch char {
         case Character("."), Character("-"):
             currentState = .high

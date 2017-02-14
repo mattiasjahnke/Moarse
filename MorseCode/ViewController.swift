@@ -16,18 +16,18 @@ class ViewController: UIViewController {
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     @IBOutlet weak var blinkView: UIView!
     
-    private var signal: MorseSignal?
-    private var beepPlayer: AVAudioPlayer!
+    fileprivate var signal: MorseSignal?
+    fileprivate var beepPlayer: AVAudioPlayer!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         let morseGesture = MorseGestureRecognizer(target: self, action: #selector(ViewController.handleMorseGesture(_:)))
         morseGesture.dotDuration = 100
         blinkView.addGestureRecognizer(morseGesture)
-        beepPlayer = try! AVAudioPlayer(contentsOfURL: NSURL(fileURLWithPath: "\(NSBundle.mainBundle().resourcePath!)/beep.mp3"))
+        beepPlayer = try! AVAudioPlayer(contentsOf: URL(fileURLWithPath: "\(Bundle.main.resourcePath!)/beep.mp3"))
     }
     
-    @IBAction func generateOutput(sender: UIButton) {
+    @IBAction func generateOutput(_ sender: UIButton) {
         let morse = Morse(clearText: inputTextField.text!)
         outputTextField.text = morse.morseString
         
@@ -40,11 +40,11 @@ class ViewController: UIViewController {
             signal = MorseSignal(morse: morse, dotDuration: 500) { signal in
                 switch signal {
                 case .low:
-                    self.blinkView.backgroundColor = .grayColor()
+                    self.blinkView.backgroundColor = .gray
                 case .high:
-                    self.blinkView.backgroundColor = .whiteColor()
+                    self.blinkView.backgroundColor = .white
                 case .finished:
-                    self.blinkView.backgroundColor = .grayColor()
+                    self.blinkView.backgroundColor = .gray
                     self.signal = nil
                 }
             }
@@ -65,9 +65,9 @@ class ViewController: UIViewController {
         }
     }
     
-    func handleMorseGesture(gesture: MorseGestureRecognizer) {
+    func handleMorseGesture(_ gesture: MorseGestureRecognizer) {
         switch gesture.state {
-        case .Ended:
+        case .ended:
             outputTextField.text = "\(outputTextField.text!)\(gesture.lastResolvedCharacter!)"
         default:
             break

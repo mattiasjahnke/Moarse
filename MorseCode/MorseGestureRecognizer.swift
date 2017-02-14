@@ -9,33 +9,33 @@
 import UIKit
 import UIKit.UIGestureRecognizerSubclass
 
-public class MorseGestureRecognizer: UIGestureRecognizer {
-    public var dotDuration: NSTimeInterval = 50
-    public var lastResolvedCharacter: String?
+open class MorseGestureRecognizer: UIGestureRecognizer {
+    open var dotDuration: TimeInterval = 50
+    open var lastResolvedCharacter: String?
     
-    private var lastPress: NSDate?
-    private var currentTapBegan: NSDate!
-    private var currentMorseString = ""
+    fileprivate var lastPress: Date?
+    fileprivate var currentTapBegan: Date!
+    fileprivate var currentMorseString = ""
     
-    public override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent) {
-        super.touchesBegan(touches, withEvent: event)
+    open override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent) {
+        super.touchesBegan(touches, with: event)
         
         if currentMorseString.isEmpty {
-            state = .Began
+            state = .began
         }
         
-        currentTapBegan = NSDate()
+        currentTapBegan = Date()
         
-        NSObject.cancelPreviousPerformRequestsWithTarget(self,
+        NSObject.cancelPreviousPerformRequests(withTarget: self,
                                                          selector: #selector(MorseGestureRecognizer.resolveCharacter),
                                                          object: nil)
     }
     
     
-    public override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent) {
-        super.touchesEnded(touches, withEvent: event)
+    open override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent) {
+        super.touchesEnded(touches, with: event)
         
-        let length = NSDate().timeIntervalSinceDate(currentTapBegan)
+        let length = Date().timeIntervalSince(currentTapBegan)
         
         // Decide if dot or dash
         if abs(dotDuration / 1000 - length) <= abs(dotDuration * 3 / 1000 - length) {
@@ -44,16 +44,16 @@ public class MorseGestureRecognizer: UIGestureRecognizer {
             currentMorseString += "-"
         }
         
-        self.performSelector(#selector(MorseGestureRecognizer.resolveCharacter),
-                             withObject: nil,
+        self.perform(#selector(MorseGestureRecognizer.resolveCharacter),
+                             with: nil,
                              afterDelay: dotDuration / 1000 * 7)
     }
     
     @objc
-    private func resolveCharacter() {
+    fileprivate func resolveCharacter() {
         // Add fail when Morse init is optional
         lastResolvedCharacter = Morse(morseString: currentMorseString).clearText
-        state = .Ended
+        state = .ended
         currentMorseString = ""
     }
 }
